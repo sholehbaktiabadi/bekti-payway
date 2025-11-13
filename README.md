@@ -9,7 +9,7 @@
 Install from npm:
 
 ```bash
-npm i bekti-pg
+npm i bekti-payway
 ```
 
 ### ⚙️ Quick Get started
