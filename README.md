@@ -15,7 +15,7 @@ npm i bekti-pg
 ### ⚙️ Quick Get started
 
 ```
-import { BektiPayWay } from "bekti-pg";
+import { BektiPayWay } from "bekti-payway";
 import { PaymentType } from "bekti-payway/dist/enum/payment-type";
 
 const bpwClient = new BektiPayWay({
