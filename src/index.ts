@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { SaweriaConfig } from './interface/config';
 import { CalculateResponse, PaymentCalculateResponse, PaymentRegisteredResponse } from './interface/response';
 import { PaymentCalculateRequest, PaymentRequest } from './interface/request';
+import { common } from './constant/cred';
 
 export class BektiPG {
     private client: AxiosInstance;
@@ -11,9 +12,9 @@ export class BektiPG {
         this.config = config;
 
         this.client = axios.create({
-            baseURL: 'https://backend.saweria.co',
-            timeout: config.timeout || 10000,
-            headers: { 'Content-Type': 'application/json' }
+            baseURL: common.baseUrl,
+            timeout: config.timeout || common.ttl,
+            headers: common.headers
         });
     }
 

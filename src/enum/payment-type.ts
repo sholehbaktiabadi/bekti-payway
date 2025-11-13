@@ -1,5 +1,7 @@
 export enum PaymentType {
-    Qris = 'qris',
+    /**
+    ** QRIS method on maintained
+    **/
     Gopay = 'gopay',
     Dana = 'dana',
     Ovo = 'ovo',
