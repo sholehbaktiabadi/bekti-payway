@@ -12,7 +12,7 @@ Install from npm:
 npm i bekti-payway
 ```
 
-### ⚙️ Quick Get started
+### ⚙️ Quick Start
 
 ```
 import { BektiPayWay } from "bekti-payway";

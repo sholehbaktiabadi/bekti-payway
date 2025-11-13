@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { SaweriaConfig } from './interface/config';
-import { CalculateResponse, PaymentCalculateResponse, PaymentRegisteredResponse } from './interface/response';
+import { CalculateResponse, PaymentCalculateResponse, PaymentRegisteredResponse, RegisteredResponse } from './interface/response';
 import { PaymentCalculateRequest, PaymentRequest } from './interface/request';
 import { common } from './constant/cred';
 
@@ -22,11 +22,11 @@ export class BektiPayWay {
      * Request Payment from saweria api
      * @returns Promise with PaymentRegisteredResponse 
      */
-    async RequestPayment(dto: PaymentRequest): Promise<PaymentRegisteredResponse> {
+    async RequestPayment(dto: PaymentRequest): Promise<RegisteredResponse> {
         const payload = { ...dto, agree: true, notUnderage: true, currency: 'IDR', message: dto.orderID }
         try {
             const response: AxiosResponse<PaymentRegisteredResponse> = await this.client.post('/donations/' + this.config.merchantUUID, payload);
-            return response.data;
+            return response.data.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error(`Failed to create payment: ${error.response?.status} - ${error.response?.data?.message || error.message}`);
