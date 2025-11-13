@@ -1,5 +1,5 @@
 export interface SaweriaConfig {
-  merchantID: string;
+  merchantUUID: string;
   username: string;
   timeout?: number;
 }

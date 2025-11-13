@@ -4,7 +4,7 @@ import { CalculateResponse, PaymentCalculateResponse, PaymentRegisteredResponse 
 import { PaymentCalculateRequest, PaymentRequest } from './interface/request';
 import { common } from './constant/cred';
 
-export class BektiPG {
+export class BektiPayWay {
     private client: AxiosInstance;
     private config: SaweriaConfig;
 
@@ -19,13 +19,13 @@ export class BektiPG {
     }
 
     /**
-     * Request Payment into saweria api
+     * Request Payment from saweria api
      * @returns Promise with PaymentRegisteredResponse 
      */
     async RequestPayment(dto: PaymentRequest): Promise<PaymentRegisteredResponse> {
         const payload = { ...dto, agree: true, notUnderage: true, currency: 'IDR', message: dto.orderID }
         try {
-            const response: AxiosResponse<PaymentRegisteredResponse> = await this.client.post('/donations/' + this.config.merchantID, payload);
+            const response: AxiosResponse<PaymentRegisteredResponse> = await this.client.post('/donations/' + this.config.merchantUUID, payload);
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -39,7 +39,7 @@ export class BektiPG {
      * Calculate Payment to check pg fee, platform fee, etc
      * @returns Promise with CalculateResponse 
      */
-    async CalculatePayment(dto: PaymentCalculateRequest): Promise<CalculateResponse> {
+    async CalculatePaymentFee(dto: PaymentCalculateRequest): Promise<CalculateResponse> {
         const payload = { ...dto, agree: true, notUnderage: true, currency: 'IDR', message: dto.orderID }
         try {
             const response: AxiosResponse<PaymentCalculateResponse> = await this.client.post(`/donations/${this.config.username}/calculate_pg_amount`, payload);
@@ -52,5 +52,3 @@ export class BektiPG {
         }
     }
 }
-
-export default BektiPG;

@@ -1,6 +1,6 @@
-# 🧾 BektiPG
+# 🧾 BektiPayWay
 
-**BektiPG** is a lightweight Node.js & TypeScript library for integrating with the **Saweria Payment Gateway API**.
+**BektiPayWay** is a lightweight Node.js & TypeScript library for integrating with the **Saweria Payment Gateway API**.
 
 ---
 
@@ -15,16 +15,16 @@ npm i bekti-pg
 ### ⚙️ Quick Get started
 
 ```
-import BektiPG from "bekti-pg";
-import { PaymentType } from "bekti-pg/interface/request";
+import { BektiPayWay } from "bekti-pg";
+import { PaymentType } from "bekti-payway/dist/enum/payment-type";
 
-const bpgClient = new BektiPG({
-  merchantID: "yourMerchantID",
+const bpwClient = new BektiPayWay({
+  merchantUUID: "yourMerchantUUID",
   username: "yourMerchantName"
 });
 
 async function createPayment() {
-  const response = await bpgClient.RequestPayment({
+  const response = await bpwClient.RequestPayment({
     amount: "1000",
     orderID: "yourOrderID",
     
@@ -42,6 +42,7 @@ async function createPayment() {
 
     /**
     ** use deeplink/redirect_url to complete payment
+    ** enable webhook url from dashboard for automation
     **/
   console.log(response);
 }
