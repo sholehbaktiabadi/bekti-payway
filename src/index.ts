@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { SaweriaConfig } from './interface/config';
-import { PaymentRegisteredResponse } from './interface/response';
+import { CalculateResponse, PaymentCalculateResponse, PaymentRegisteredResponse } from './interface/response';
 import { PaymentCalculateRequest, PaymentRequest } from './interface/request';
 
 export class BektiPG {
@@ -13,14 +13,12 @@ export class BektiPG {
         this.client = axios.create({
             baseURL: 'https://backend.saweria.co',
             timeout: config.timeout || 10000,
-            headers: {
-                'Content-Type': 'application/json',
-            }
+            headers: { 'Content-Type': 'application/json' }
         });
     }
 
     /**
-     * Request Payment bektipg
+     * Request Payment into saweria api
      * @returns Promise with PaymentRegisteredResponse 
      */
     async RequestPayment(dto: PaymentRequest): Promise<PaymentRegisteredResponse> {
@@ -38,20 +36,20 @@ export class BektiPG {
 
     /**
      * Calculate Payment to check pg fee, platform fee, etc
-     * @returns Promise with PaymentRegisteredResponse 
+     * @returns Promise with CalculateResponse 
      */
-    async CalculatePayment(dto: PaymentCalculateRequest): Promise<PaymentRegisteredResponse> {
+    async CalculatePayment(dto: PaymentCalculateRequest): Promise<CalculateResponse> {
         const payload = { ...dto, agree: true, notUnderage: true, currency: 'IDR', message: dto.orderID }
         try {
-            const response: AxiosResponse<PaymentRegisteredResponse> = await this.client.post(`/donations/${this.config.username}/calculate_pg_amount`, payload);
-            return response.data;
+            const response: AxiosResponse<PaymentCalculateResponse> = await this.client.post(`/donations/${this.config.username}/calculate_pg_amount`, payload);
+            return response.data.data
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error(`Failed to calculate payment: ${error.response?.status} - ${error.response?.data?.message || error.message}`);
             }
             throw new Error(`Failed to calculate payment: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
-    }    
+    }
 }
 
 export default BektiPG;

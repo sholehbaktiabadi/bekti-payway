@@ -23,3 +23,13 @@ export interface PaymentRegisteredResponse {
     };
   };
 }
+
+export interface PaymentCalculateResponse {
+  data: CalculateResponse
+}
+
+export interface CalculateResponse{
+    amount_to_pay: number;
+    pg_fee: number;
+    platform_fee: number;
+}
